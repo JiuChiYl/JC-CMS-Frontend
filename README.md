@@ -11,6 +11,12 @@
 > * 组件拓展（及拓展功能）
 > * 撰写文章
 
+目前能使用的功能非常非常少。由于单人开发，以及对ui设计，组件布局的不成熟等一系列原因，开发进度极为缓慢，如果您对我的项目感兴趣，非常欢迎加入一起完成这个作品
+
+目前已能使用的部分涉及后端操作的功能均由一个由Express框架构建的简单服务器架构来操作，正式场景及不推荐继续沿用这种方法。该文件为于`public/Server.js`，如要调试，或者试用项目中的**组件拓展**和撰写文章中的**WangEditor**的图片插入功能，则需运行此文件
+`cd .\public\` `node Server.js
+`
+
 # vue-project
 
 This template should help get you started developing with Vue 3 in Vite.
