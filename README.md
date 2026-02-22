@@ -1,3 +1,11 @@
+# 通用内容管理器简介
+
+> ## 框架
+> * ElementPlus
+> * WangEditor
+
+
+
 # vue-project
 
 This template should help get you started developing with Vue 3 in Vite.
