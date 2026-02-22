@@ -1,3 +1,16 @@
+# 通用内容管理器简介
+
+> ## 框架
+> * ElementPlus
+> * WangEditor
+
+介绍不下去了，还没完成
+
+> ## 已能正常打开使用的页面
+> * 日程
+> * 组件拓展（及拓展功能）
+> * 撰写文章
+
 # vue-project
 
 This template should help get you started developing with Vue 3 in Vite.
