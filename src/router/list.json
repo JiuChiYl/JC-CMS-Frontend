@@ -1,0 +1,13 @@
+{
+  "view": [
+    "HomeView",
+    "EventLog",
+    "CalendaryDate",
+    "PageExpansion",
+    "EditorPost"
+  ],
+  "component": [
+    "Vecm",
+    "Pgss"
+  ]
+}
