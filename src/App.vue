@@ -3,6 +3,7 @@ import { ref, watch, computed, onMounted, onUnmounted } from 'vue';
 import { RouterView, useRoute, useRouter } from 'vue-router'
 import titleMaps from './titleMap.json'
 import DraggableWidget from '@/components/more/DraggableWidget.vue'
+import MusicTool from '@/components/more/MusicTool.vue'
 // import { usePluginStore } from '@/store/pluginStore'
 
 const route = useRoute();
@@ -147,13 +148,9 @@ watch(
 
   </div>
 
-  <!-- <DraggableWidget :threshold="30" style="width: 300px;">
-    <el-card>
-      <template #header>
-        <span>可拖拽组件</span>
-      </template>
-    </el-card>
-  </DraggableWidget> -->
+  <DraggableWidget :threshold="30" class="musicToolBox" style="width: 350px;">
+      <MusicTool />
+  </DraggableWidget>
 
 </template>
 

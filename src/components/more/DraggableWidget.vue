@@ -9,7 +9,7 @@ const props = defineProps({
 })
 
 const draggableRef = ref(null)
-const position = ref({ x: 100, y: 100 })
+const position = ref({ x: 10, y: 900 })
 const dragging = ref(false)
 const startPos = ref({ x: 0, y: 0 })
 const startOffset = ref({ x: 0, y: 0 })
@@ -87,7 +87,7 @@ const stopDrag = () => {
     }
 
     // 更新位置（加上平滑过渡）
-    position.value = { x: targetX, y: targetY }
+    position.value = { x: targetX , y: targetY }
 }
 
 // 清理事件监听
@@ -109,7 +109,7 @@ onUnmounted(() => {
     position: fixed;
     cursor: move;
     user-select: none;
-    z-index: 9999;
+    z-index: 999;
     /* 添加平滑过渡效果，让吸附更自然 */
     /* transition: left 0.2s ease, top 0.2s ease; */
 }
