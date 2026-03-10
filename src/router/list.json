@@ -4,7 +4,8 @@
     "EventLog",
     "CalendaryDate",
     "PageExpansion",
-    "EditorPost"
+    "EditorPost",
+    "Setting"
   ],
   "component": [
     "Vecm",

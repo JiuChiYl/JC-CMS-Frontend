@@ -37,6 +37,11 @@ body {
   margin: 0;
 }
 
+*{
+  -webkit-user-select: none;
+  user-select: none;
+}
+
 .ui-bg {
   backdrop-filter: blur(10px);
   background-image: linear-gradient(45deg,
@@ -69,4 +74,12 @@ body {
 
 .divider_line {
   margin: 0 !important;
+}
+
+canvas.fireworks {
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 9999;
+  pointer-events: none;
 }
