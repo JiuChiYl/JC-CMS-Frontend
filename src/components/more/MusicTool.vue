@@ -88,7 +88,7 @@ watch(selectedMusic, (newVal, oldVal) => {
 });
 </script>
 <template>
-    <el-card header-class="music_back">
+    <el-card body-class="bd_ui_lin" header-class="music_back">
         <template #header>
             <el-row style="z-index: 2;" :gutter="0">
                 <el-col :span="5" style="display: flex;align-items: center;justify-content: center;">

@@ -39,7 +39,7 @@ function act() {
 
 const size = ref(40);
 const circleUrl = ref('./img/731ac3e8e6dd38c397bbab65b0197a171862641106.png');
-const userName = ref('超级管理员');
+const userName = ref('里子');
 
 console.log(titleMaps.moreExpansion);
 
@@ -209,7 +209,7 @@ watch(backgroundBlur, (newVal, oldVal) => {
         </el-menu>
       </el-aside>
       <el-container>
-        <el-header class="top_title" style="line-height: 60px;">{{ AppTiele }}</el-header>
+        <el-header class="top_title bd_ui_lin" style="line-height: 60px;">{{ AppTiele }}</el-header>
         <el-divider class="divider_line"></el-divider>
         <el-main>
           <RouterView v-slot="{ Component, route }">
@@ -281,10 +281,30 @@ watch(backgroundBlur, (newVal, oldVal) => {
 
 #userBox {
   transition: all 0.3s ease-in-out;
+  position: relative;
+  overflow: hidden;
+}
+#userBox:hover::after{
+  filter: blur(5px);
+}
+#userBox::after{
+  position: absolute;
+  content: '';
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 5px;
+
+  background: linear-gradient(90deg,
+  red 0%,red 20%
+  ,yellow 10%,yellow 40%,#09f 10%);
+  filter: blur(10px);
+
+  transition: all 0.3s ease-in-out;
 }
 
 .userBox_it_show {
   margin: 10px;
-  border-radius: 10px;
+  border-radius: 5px;
 }
 </style>
