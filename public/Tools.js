@@ -1,3 +1,4 @@
+
 /**
  * 数组转换为访问函数
  * @param {Array} arr 数组 数组元素为字符串或数字 - ['page1','user','0']
@@ -94,3 +95,24 @@ export function searchObj(obj) {
         return result;
     }
 }
+
+
+// 函数的链式调用
+export function chainFun(){
+    const objs = {
+        rbq: function(val){
+            console.log(val);
+            return this;
+        },
+        rq: function(val){
+            console.log(val);
+            return this;
+        },
+        br: function(val){
+            console.log(val);
+            return this;
+        }
+    };
+    return objs;
+}
+chainFun().rbq('123').br('789').rq('456');

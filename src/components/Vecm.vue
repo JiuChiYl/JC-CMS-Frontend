@@ -36,6 +36,6 @@ const user = ref({
 </script>
 <template>
     <VersionCalendar :version="version" title="明日方舟终末地 / 鸣潮版本日历" />
-    <UserColorCard style="margin-top: 20px; width: 510px;" :userInfo="user"/>
+    <UserColorCard style="margin-top: 20px; width: 510px;" :userInfo="user" position_to="right" />
 </template>
 <style></style>

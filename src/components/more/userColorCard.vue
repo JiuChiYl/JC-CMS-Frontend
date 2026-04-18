@@ -23,10 +23,17 @@
                         {{ props.userInfo.description }}
                     </div>
                 </div>
-                <div class="description_btn" @click="showDescription" :style="{ right: btn_location }">
+
+                <div class="description_btn " @click="description_btn_click"
+                    v-if="props.position_to && props.btn_position == 'center'" :style="{ right: btn_position }">
                     <i class="bi bi-chevron-compact-up" v-if="descriptionShow"></i>
                     <i class="bi bi-chevron-compact-down" v-else></i>
                 </div>
+                <div class="description_btn " @click="showDescription" v-else :style="{ right: btn_position }">
+                    <i class="bi bi-chevron-compact-up" v-if="descriptionShow"></i>
+                    <i class="bi bi-chevron-compact-down" v-else></i>
+                </div>
+
             </div>
         </div>
         <div class="card-footer" :style="{ backgroundColor: props.FooterColor }">
@@ -48,7 +55,7 @@ import { ref, defineProps } from 'vue';
 const props = defineProps({
     BodyColor: {
         type: Array,
-        default: ['#FF9AC6', '#B0DDFE']
+        default: () => ['#FF9AC6', '#B0DDFE']
     },
     FooterColor: {
         type: String,
@@ -56,43 +63,75 @@ const props = defineProps({
     },
     userInfo: {
         type: Object,
-        default: {
+        default: () => ({
             avatar: 'https://q7.itc.cn/q_70/images03/20240613/38e50443a3a148b287d1d13bd43ebd69.jpeg',
             username: 'User',
             uid: '',
             description: '',
-        }
+        })
     },
-    btn_location: {
+    btn_position: {
         type: String,
         default: 'center'
+    },
+    position_to: {
+        type: String,
+        default: ''
     }
 });
 
-const btn_location = ref('');
+const btn_position = ref('');
 
-switch(props.btn_location){
+const description_btn_animation = ref(false);
+
+
+switch (props.btn_position) {
     case 'right':
-        btn_location.value = '0';
+        btn_position.value = '0';
         break;
     case 'center':
-        btn_location.value = '50%';
+        btn_position.value = '50%';
         break;
     case 'left':
-        btn_location.value = 'auto';
+        btn_position.value = 'auto';
         break;
+}
+
+const description_btn_click = () => {
+    showDescription();
+    if (props.position_to === '') {
+        return;
+    } else if (props.position_to == 'right') {
+        description_btn_animation.value = !description_btn_animation.value;
+        if (description_btn_animation.value) {
+            document.querySelector('.description_btn').classList.add('description_btn_animation_show_right');
+            document.querySelector('.description_btn').classList.remove('description_btn_animation_hide_right');
+        } else {
+            document.querySelector('.description_btn').classList.remove('description_btn_animation_show_right');
+            document.querySelector('.description_btn').classList.add('description_btn_animation_hide_right');
+        }
+    } else if (props.position_to == 'left') {
+        description_btn_animation.value = !description_btn_animation.value;
+        if (description_btn_animation.value) {
+            document.querySelector('.description_btn').classList.add('description_btn_animation_show_left');
+            document.querySelector('.description_btn').classList.remove('description_btn_animation_hide_left');
+        } else {
+            document.querySelector('.description_btn').classList.remove('description_btn_animation_show_left');
+            document.querySelector('.description_btn').classList.add('description_btn_animation_hide_left');
+        }
+    }
 }
 
 const patchCheck = ref(true);
 const descriptionShow = ref(false);
-function showDescription(){
+function showDescription() {
     descriptionShow.value = !descriptionShow.value;
 }
 </script>
 <style scoped>
 @import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css");
 
-.user-color-card-main *{
+.user-color-card-main * {
     transition: all 0.3s ease-in-out;
 }
 
@@ -134,16 +173,16 @@ function showDescription(){
     margin: 3px 0px;
 }
 
-.user_info_content{
+.user_info_content {
     margin-left: 10px;
 }
 
-.description_box{
+.description_box {
     margin-left: 10px;
     position: relative;
 }
 
-.description_content{
+.description_content {
     display: grid;
     grid-template-rows: 0fr;
     color: #FFF;
@@ -155,7 +194,7 @@ function showDescription(){
     white-space: pre-wrap;
 }
 
-.description_btn{
+.description_btn {
     background-color: #ffffff58;
     padding: 0 8px;
     border-radius: 15px;
@@ -169,6 +208,66 @@ function showDescription(){
     bottom: -15px;
     /* right: 50%; */
 }
+
+/* ------------------- 描述按钮动画 ------------------- */
+
+.description_btn_animation_show_right {
+    animation: description_btn_animation_right_show .5s cubic-bezier(0.56, 0.02, 1, 0.27) forwards;
+}
+
+.description_btn_animation_hide_right {
+    animation: description_btn_animation_right_hide .5s cubic-bezier(0.56, 0.02, 1, 0.27) forwards;
+}
+
+@keyframes description_btn_animation_right_show {
+    0% {
+        right: 50%;
+    }
+
+    100% {
+        right: 0;
+    }
+}
+
+@keyframes description_btn_animation_right_hide {
+    0% {
+        right: 0;
+    }
+
+    100% {
+        right: 50%;
+    }
+}
+
+.description_btn_animation_show_left {
+    animation: description_btn_animation_left_show .5s cubic-bezier(0.56, 0.02, 1, 0.27) forwards;
+}
+
+.description_btn_animation_hide_left {
+    animation: description_btn_animation_left_hide .5s cubic-bezier(0.56, 0.02, 1, 0.27) forwards;
+}
+
+@keyframes description_btn_animation_left_show {
+    0% {
+        right: 50%;
+    }
+
+    100% {
+        right: calc(100% - 27px);
+    }
+}
+
+@keyframes description_btn_animation_left_hide {
+    0% {
+        right: calc(100% - 27px);
+    }
+
+    100% {
+        right: 50%;
+    }
+}
+
+/* ------------------------------------------------- */
 
 .user_name {
     font-size: 24px;
