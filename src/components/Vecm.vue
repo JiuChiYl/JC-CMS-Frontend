@@ -1,6 +1,7 @@
 <script setup>
 import VersionCalendar from '@/components/more/VersionCalendar.vue';
 import UserColorCard from '@/components/more/userColorCard.vue';
+import GithubHeatmap from '@/components/more/GithubHeatmap.vue';
 import { ref } from 'vue';
 
 const version = ref([
@@ -52,7 +53,8 @@ const user = ref({
     
     <UserColorCard style="margin-top: 20px; width: 510px;" :BodyColor="['#81b992','#09F']" FooterColor="#055489" footer_icon_color="#6eabd3" />
 
-
+    <!-- GitHub热力图 -->
+    <GithubHeatmap style="margin-top: 20px;" username="JiuChiYl" />
 
 </template>
 <style></style>

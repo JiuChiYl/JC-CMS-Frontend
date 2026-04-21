@@ -108,8 +108,6 @@ switch (props.btn_position) {
         break;
 }
 
-
-
 const user_colorCard_description_btn = ref(null);
 const description_btn = ref(null);
 onMounted(() => {
