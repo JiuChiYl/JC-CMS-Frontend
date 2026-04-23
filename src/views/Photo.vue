@@ -7,7 +7,7 @@
         <el-button type="primary" class="btn-sty" @click="upload">上传</el-button>
       </div>
       <div :style="{ opacity: filterFlag ? '1' : '0' }" class="filter-sty">
-        <el-dropdown v-for="item in filterArr" :key="item.type" class="dropdown-sty">
+        <el-dropdown v-for="item in filterArr" :key="item.type" class="dropdown-sty" @command="(command)=>handleCommand(command,item.type)">
           <span class="el-dropdown-link">
             {{ item.name }}
             <el-icon class="el-icon--right">
@@ -16,7 +16,7 @@
           </span>
           <template #dropdown>
             <el-dropdown-menu>
-              <el-dropdown-item v-for="item2 in item.childer" :key="item2.key">{{ item2.value }}</el-dropdown-item>
+              <el-dropdown-item v-for="item2 in item.childer" :key="item2.key" :command="item2">{{ item2.value }}</el-dropdown-item>
             </el-dropdown-menu>
           </template>
         </el-dropdown>
@@ -45,12 +45,12 @@ const imgArr = reactive([])
 // 输入框回车事件
 const inputKeyDown = (e)=>{
   if(e.code==="Enter"){
-    console.log(inputValue.value);
+    getImageList()
   }
 }
 // 搜索
 const search = ()=>{
-  console.log(inputValue.value);
+  getImageList()
 }
 // 上传
 const upload = ()=>{
@@ -61,12 +61,34 @@ const upload = ()=>{
 const filter = ()=>{
   filterFlag.value = !filterFlag.value
 }
+// 获取图片查询结果
+const getImageList=()=>{
+  //请求参数组合
+  const obj = {}
+  filterArr.forEach(item=>{
+    obj[item.type] = item.key
+  })
+  obj.searchName = inputValue.value;
+  console.log(obj);
+}
+// 筛选下拉框点击
+const handleCommand = (command,type)=>{
+  filterArr.forEach(item=>{
+    if(item.type===type){
+      item.name = command.value
+      item.key = command.key
+    }
+  })
+  // 调取图片查询接口
+  getImageList()
+}
 // 初始化-获取筛选条件列表
 const initFilterList = ()=>{
   filterArr.push(
     {
       name:'图片尺寸',
       type:'imgSize',
+      key:'1',
       childer:[
         {
           key:'1',
@@ -93,6 +115,7 @@ const initFilterList = ()=>{
     {
       name:'类型',
       type:'category',
+      key:'1',
       childer:[
         {
           key:'1',
@@ -111,6 +134,7 @@ const initFilterList = ()=>{
     {
       name:'上传时间',
       type:'time',
+      key:'1',
       childer:[
         {
           key:'1',
@@ -197,18 +221,20 @@ onMounted(() => {
 }
 .images{
   margin-top: 20px;
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-gap: 10px 10px;
+  grid-template-columns: auto auto auto auto auto auto;
   >div{
-    margin-right: 20px;
-    width: 12%;
+    text-align: center;
+    margin-bottom: 20px;
     img{
-      width: 100%;
+      max-width: 230px;
+      min-width: 180px;
       border-radius: 10px;
     }
-  }
-  >div:last-child{
-    margin-right: 0;
+    p{
+      margin: 0;
+    }
   }
 }
 </style>
