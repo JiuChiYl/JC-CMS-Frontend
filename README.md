@@ -1,5 +1,7 @@
 # 通用内容管理器简介
 
+## 这是一个前端单页面应用
+
 > ## 框架
 > * ElementPlus
 > * WangEditor
