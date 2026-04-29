@@ -2,21 +2,22 @@
   <div class="photo">
     <div class="search">
       <div>
-        <el-input v-model="inputValue" class="search-input" placeholder="请输入" @keydown="inputKeyDown" />
-        <el-button type="primary" class="btn-sty" @click="search">
-          <el-icon class="el-icon--left">
-            <Search />
+        <el-input v-model="inputValue" class="search-input" placeholder="图片检索" @keydown="inputKeyDown"
+          :prefix-icon="Search" />
+        <el-button plain @click="filter" style="margin-left: 20px;" type="primary">
+          <span>筛选</span>
+          <el-icon class="el-icon--right">
+            <i class="bi bi-funnel"></i>
           </el-icon>
-          搜索
         </el-button>
-        <el-button type="primary" class="btn-sty" @click="upload">
+        <el-button plain type="success" class="btn-sty" @click="upload">
           上传
           <el-icon class="el-icon--right">
-            <Upload />
+            <i class="bi bi-cloud-arrow-up"></i>
           </el-icon>
         </el-button>
       </div>
-      <div :style="{ opacity: filterFlag ? '1' : '0' }" class="filter-sty">
+      <div v-if="filterFlag" class="filter-sty">
         <el-dropdown v-for="item in filterArr" :key="item.type" class="dropdown-sty"
           @command="(command) => handleCommand(command, item.type)">
           <span class="el-dropdown-link">
@@ -28,21 +29,36 @@
           <template #dropdown>
             <el-dropdown-menu>
               <el-dropdown-item v-for="item2 in item.childer" :key="item2.key" :command="item2">{{ item2.value
-                }}</el-dropdown-item>
+              }}</el-dropdown-item>
             </el-dropdown-menu>
           </template>
         </el-dropdown>
-      </div>
-      <div @click="filter">
-        <span>筛选器</span>
-        <el-icon>
-          <Filter />
-        </el-icon>
       </div>
     </div>
     <div class="images">
       <div v-for="(item, index) in imgArr" :key="index">
         <div class="img-box">
+          <div class="img_info_size_box">
+            <!-- 分类 -->
+            <div class="img_info_item"><!-- 大小-->
+              <el-icon class="el-icon--left">
+                <i class="bi bi-aspect-ratio"></i>
+              </el-icon>
+              <span>{{ item.size }}</span>
+            </div>
+            <div class="img_info_item"><!-- 类型-->
+              <el-icon class="el-icon--left">
+                <i class="bi bi-card-image"></i>
+              </el-icon>
+              <span>{{ item.category }}</span>
+            </div>
+            <div class="img_info_item"><!-- 上传时间-->
+              <el-icon class="el-icon--left">
+                <i class="bi bi-clock"></i>
+              </el-icon>
+              <span>{{ item.uploadTime }}</span>
+            </div>
+          </div>
           <img :src="item.url" alt="item.keyWords">
           <div class="img_btn_box">
             <el-button-group>
@@ -70,19 +86,18 @@
 </template>
 <script setup>
 import { ref, reactive, onMounted } from 'vue'
+import { Search, Upload, Download, Delete, ArrowDown } from '@element-plus/icons-vue'
+import dayjs from 'dayjs';
 const inputValue = ref('')
 const filterFlag = ref(false)
 const filterArr = reactive([])
 const imgArr = reactive([])
 // 输入框回车事件
+// 搜索
 const inputKeyDown = (e) => {
   if (e.code === "Enter") {
     getImageList()
   }
-}
-// 搜索
-const search = () => {
-  getImageList()
 }
 // 上传
 const upload = () => {
@@ -160,6 +175,14 @@ const initFilterList = () => {
         {
           key: '3',
           value: '人像'
+        },
+        {
+          key: '4',
+          value: '绘画'
+        },
+        {
+          key: '5',
+          value: '其他'
         }
       ]
     },
@@ -193,16 +216,21 @@ const initFilterList = () => {
   )
 }
 // 初始化-获取第一页图片数据
+// 模拟数据
 const initImages = () => {
   for (let index = 0; index < 20; index++) {
     imgArr.push({
       name: '达妮娅',
       keyWords: '背景,达妮娅',
       title: '精选背景图片',
-      url: '../../public/img/bck1.png',
-      uploadTime: '20260422'
+      url: './img/bck1.png',
+      uploadTime: dayjs().format('YYYY-MM-DD'),
+      size: '中',
+      category: '绘画',
     })
   }
+  console.log(imgArr);
+
 }
 onMounted(() => {
   initFilterList();
@@ -227,7 +255,7 @@ onMounted(() => {
 }
 
 .btn-sty {
-  margin-left: 20px;
+  margin-right: 20px;
 }
 
 .example-showcase .el-dropdown-link {
@@ -287,7 +315,8 @@ onMounted(() => {
     }
   }
 }
-.img-box{
+
+.img-box {
   position: relative;
   display: flex;
   justify-content: center;
@@ -295,7 +324,8 @@ onMounted(() => {
   border-radius: 5px;
   width: max-content;
 }
-.img_btn_box{
+
+.img_btn_box {
   width: 100%;
   padding: 5px;
   position: absolute;
@@ -303,14 +333,46 @@ onMounted(() => {
   transition: all 0.3s ease-in-out;
   backdrop-filter: blur(10px);
   background-image: linear-gradient(45deg,
-            #9c9c9c2f 25%, transparent 25%, transparent 50%,
-            #9c9c9c2f 50%, #9c9c9c2f 75%, transparent 75%, transparent);
-    background-size: 4px 4px;
-    background-position: 0 0;
-    background-repeat: repeat;
-    border-top: 1px solid #ffffff49;
+      #9c9c9c2f 25%, transparent 25%, transparent 50%,
+      #9c9c9c2f 50%, #9c9c9c2f 75%, transparent 75%, transparent);
+  background-size: 4px 4px;
+  background-position: 0 0;
+  background-repeat: repeat;
+  border-top: 1px solid #ffffff49;
 }
-.images>div:hover .img_btn_box{
+
+.images>div:hover .img_btn_box {
   bottom: 0px;
+}
+
+.img_info_size_box {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  color: #ffffffbb;
+  padding: 0px 5px;
+  font-size: 11px;
+  border-radius: 3px;
+  backdrop-filter: blur(10px);
+  border: 1px solid #ffffff71;
+  display: flex;
+  align-items: center;
+
+  background-image: linear-gradient(45deg,
+      #9c9c9c17 25%, transparent 25%, transparent 50%,
+      #9c9c9c17 50%, #9c9c9c17 75%, transparent 75%, transparent);
+  background-size: 4px 4px;
+  background-position: 0 0;
+  background-repeat: repeat;
+}
+
+.img_info_item {
+  display: flex;
+  align-items: center;
+  margin-left: 10px;
+
+  &:first-child {
+    margin-left: 0;
+  }
 }
 </style>
