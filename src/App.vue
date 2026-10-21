@@ -28,7 +28,7 @@ const scrollTopFn = () => {
 onMounted(async () => {
   let gs = await axios.get('http://localhost:3553/api/context', {
     params: {
-      "context": "cU7zCB_aRBa2.json"
+      "context": "evA0vfPuA0Hc.json"
     }
   });
   agent_content.value = gs.data;
@@ -57,7 +57,7 @@ const sendQuestion = async () => {
   try {
     // 使用 fetch 获取流式响应
     const response = await fetch('http://localhost:3553/api/ai?' + new URLSearchParams({
-      context: "cU7zCB_aRBa2.json",
+      context: "evA0vfPuA0Hc.json",
       say: userQuestion
     }));
 
